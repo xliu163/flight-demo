@@ -1,15 +1,15 @@
 package com.example.flight_demo.controller;
 
+import com.example.flight_demo.dto.BookingRequest;
 import com.example.flight_demo.model.Booking;
 import com.example.flight_demo.service.FlightService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -22,10 +22,8 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<Booking> createBooking(@RequestBody Map<String, String> request) {
-        String flightNumber = request.get("flightNumber");
-        String passengerName = request.get("passengerName");
-        Booking booking = flightService.createBooking(flightNumber, passengerName);
+    public ResponseEntity<Booking> createBooking(@Valid @RequestBody BookingRequest request) {
+        Booking booking = flightService.createBooking(request.getFlightNumber(), request.getPassengerName());
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
 }
