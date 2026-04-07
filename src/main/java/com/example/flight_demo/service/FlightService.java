@@ -21,6 +21,10 @@ public class FlightService {
         flights.put("AA123", new Flight("AA123", 150));
     }
 
+    public void addFlight(Flight flight) {
+        flights.put(flight.getFlightNumber(), flight);
+    }
+
     public Booking createBooking(String flightNumber, String passengerName) {
         Flight flight = flights.get(flightNumber);
         if (flight == null) {
